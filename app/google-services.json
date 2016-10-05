@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "960322293887",
+    "firebase_url": "https://shared-economy-a3397.firebaseio.com",
+    "project_id": "shared-economy-a3397",
+    "storage_bucket": "shared-economy-a3397.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960322293887:android:ccfd5c05f2f644f2",
+        "android_client_info": {
+          "package_name": "io.pet2share.pet2share"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960322293887-i81dsio3gttmcjpf1hn8ueiscn5t2fmr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.pet2share.pet2share",
+            "certificate_hash": "A540659C3CC3ADED25F493A70629799DB4957C52"
+          }
+        },
+        {
+          "client_id": "960322293887-1itrmmqv4qutfmujc1mc8h4rmthv8h95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.pet2share.pet2share",
+            "certificate_hash": "8BC792CA0B8C6BB607EBB9AE37F2132335CF03EA"
+          }
+        },
+        {
+          "client_id": "960322293887-hq6ukh26n5fl6mvbvnqeg25sgav0lfmf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSd0TUzegTgJTT_gG2BHTUM7i6dS-Uazc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
