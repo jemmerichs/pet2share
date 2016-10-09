@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -25,6 +27,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.pet2share.pet2share.MainActivity;
 import io.pet2share.pet2share.R;
 
@@ -32,6 +37,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "LOGIN";
+
+
+    @BindView(R.id.login)
+    Button loginButton;
+
+    @BindView(R.id.email)
+    EditText emailEditText;
+
+    @BindView(R.id.password)
+    EditText passwordEditText;
 
     GoogleApiClient googleApiClient;
     private FirebaseAuth firebaseAuth;
@@ -41,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -60,14 +76,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
-        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
-
-        findViewById(R.id.anonym_login).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.anonym_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 firebaseAuth.signInAnonymously()
@@ -90,11 +99,43 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             }
                         });
             }
-        });
+        });*/
 
     }
 
+    @OnClick(R.id.login)
+    public void firebaseAuthWithPassword() {
 
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+                            Toast.makeText(LoginActivity.this, R.string.auth_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            handleSingleInSuccessful();
+                        }
+
+
+                    }
+                });
+    }
+
+    private void handleSingleInSuccessful() {
+        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(i);
+        this.finish();
+    }
+
+/*
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -118,13 +159,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             firebaseAuthWithGoogle(account);
         }
     }
-
+*/
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
-
+/*
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -150,7 +191,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         }
                     }
                 });
-    }
+    }*/
     @Override
     public void onStart() {
         super.onStart();

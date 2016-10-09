@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 
 import io.pet2share.pet2share.R;
@@ -36,5 +37,13 @@ public class BasicActivity extends AppCompatActivity {
             startActivity(i);
             this.finish();
         }
+    }
+
+    public FirebaseAuth getFirebaseAuth() {
+        return FirebaseAuth.getInstance();
+    }
+
+    public String getCurrentUid() {
+        return getFirebaseAuth().getCurrentUser().getUid();
     }
 }
