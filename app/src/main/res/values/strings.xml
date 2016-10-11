@@ -5,4 +5,6 @@
     <string name="offer_btn">Offer</string>
     <string name="search_btn">Search</string>
     <string name="auth_failed">Authentifizierung fehlgeschlagen</string>
+    <string name="e_mail_address">E-Mail Address...</string>
+    <string name="password">Password...</string>
 </resources>

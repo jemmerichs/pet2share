@@ -47,18 +47,21 @@ public class HomeActivity extends BasicActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ProfileLoader.getInstance().loadProfileInformation(getCurrentUid(), new ProfileInformationLoadingInterface() {
-            @Override
-            public void applyInformation(Profile profile) {
-                HomeActivity.this.profileName.setText(profile.getFirstname()+" "+profile.getLastname());
-            }
-        });
-        ProfileLoader.getInstance().loadProfilePicture(getCurrentUid(), new ProfilePictureLoadingInterface() {
-            @Override
-            public void applyInformation(Bitmap profilePicture) {
-                HomeActivity.this.profileImageView.setImageBitmap(profilePicture);
-            }
-        });
+
+        if(getFirebaseAuth().getCurrentUser()!=null) {
+            ProfileLoader.getInstance().loadProfileInformation(getCurrentUid(), new ProfileInformationLoadingInterface() {
+                @Override
+                public void applyInformation(Profile profile) {
+                    HomeActivity.this.profileName.setText(profile.getFirstname() + " " + profile.getLastname());
+                }
+            });
+            ProfileLoader.getInstance().loadProfilePicture(getCurrentUid(), new ProfilePictureLoadingInterface() {
+                @Override
+                public void applyInformation(Bitmap profilePicture) {
+                    HomeActivity.this.profileImageView.setImageBitmap(profilePicture);
+                }
+            });
+        }
     }
 
     @Override
