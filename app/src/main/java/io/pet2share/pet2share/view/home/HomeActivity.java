@@ -37,6 +37,7 @@ public class HomeActivity extends BasicActivity {
     @BindView(R.id.search_btn)
     protected Button search;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
