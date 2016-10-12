@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="io.pet2share.pet2share.signin.LoginActivity"
+    tools:context=".view.signin.LoginActivity"
     tools:showIn="@layout/activity_login">
 
     <LinearLayout
@@ -28,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/e_mail_address"
                 android:inputType="textEmailAddress"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:text="bauschma@gmx.de" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -40,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:text="1234567890" />
         </android.support.design.widget.TextInputLayout>
 
     <Button

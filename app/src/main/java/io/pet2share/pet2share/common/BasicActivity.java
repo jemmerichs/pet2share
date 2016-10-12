@@ -1,18 +1,11 @@
 package io.pet2share.pet2share.common;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 
-import io.pet2share.pet2share.R;
-import io.pet2share.pet2share.signin.LoginActivity;
+import io.pet2share.pet2share.view.signin.LoginActivity;
 
 /**
  * Created by bausch on 05.10.16.

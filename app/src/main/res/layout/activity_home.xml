@@ -3,12 +3,13 @@
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/shadowColor"
     android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@color/background">
+        android:background="@color/white"
+        android:layout_height="250dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -42,9 +43,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
         android:gravity="center"
         android:orientation="vertical"
+        android:background="@color/white"
         android:paddingTop="6dp">
 
         <LinearLayout
