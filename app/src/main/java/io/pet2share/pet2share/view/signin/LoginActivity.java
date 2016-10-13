@@ -38,7 +38,6 @@ import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.data.profile.ProfileLoader;
 import io.pet2share.pet2share.interfaces.loader.ProfileInformationLoadingInterface;
 import io.pet2share.pet2share.model.user.Profile;
-import io.pet2share.pet2share.view.home.HomeActivity;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -261,7 +260,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void handleSingleInSuccessful() {
-        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+        Intent i = new Intent(LoginActivity.this, OverviewActivity.class);
         startActivity(i);
         this.finish();
     }

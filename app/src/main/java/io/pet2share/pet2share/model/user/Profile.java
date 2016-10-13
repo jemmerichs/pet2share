@@ -4,6 +4,7 @@ public class Profile{
     private String firstname;
     private String lastname;
     private String dateOfBirthString;
+    private String motto;
     private String genderString;
 
     public String getFirstname() {
