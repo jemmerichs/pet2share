@@ -5,9 +5,15 @@
     <string name="offer_btn">Offer</string>
     <string name="search_btn">Search</string>
     <string name="auth_failed">Authentifizierung fehlgeschlagen</string>
-    <string name="e_mail_address">E-Mail Address...</string>
-    <string name="password">Password...</string>
-    <string name="messages_fragment_title">Messages</string>
-    <string name="offers_fragment_title">Offers</string>
-    <string name="profile_fragment_title">Profile</string>
+    <string name="e_mail_address">E-Mail Address</string>
+    <string name="password">Password</string>
+    <string name="register_here">Register here!</string>
+    <string name="login_here">Login here!</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
 </resources>
