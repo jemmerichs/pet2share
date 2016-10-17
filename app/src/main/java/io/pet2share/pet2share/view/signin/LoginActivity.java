@@ -38,6 +38,7 @@ import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.data.profile.ProfileLoader;
 import io.pet2share.pet2share.interfaces.loader.ProfileInformationLoadingInterface;
 import io.pet2share.pet2share.model.user.Profile;
+import io.pet2share.pet2share.view.home.OverviewActivity;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 

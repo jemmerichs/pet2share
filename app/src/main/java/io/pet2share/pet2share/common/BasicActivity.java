@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
-import io.pet2share.pet2share.view.signin.LoginActivity;
+import io.pet2share.pet2share.signin.LoginActivity;
+
 
 /**
  * Created by bausch on 05.10.16.
@@ -31,6 +33,7 @@ public class BasicActivity extends AppCompatActivity {
             this.finish();
         }
     }
+public FirebaseDatabase getFirebaseDatase() {return FirebaseDatabase.getInstance();}
 
     public FirebaseAuth getFirebaseAuth() {
         return FirebaseAuth.getInstance();

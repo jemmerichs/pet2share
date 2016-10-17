@@ -7,6 +7,10 @@ public class Profile{
     private String motto;
     private String genderString;
 
+    public String getMotto() {
+        return motto;
+    }
+
     public String getFirstname() {
         return firstname;
     }

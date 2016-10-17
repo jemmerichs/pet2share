@@ -20,7 +20,7 @@ import io.pet2share.pet2share.R;
  * Created by Muki-Zenbook on 12.10.2016.
  */
 
-public class ProfileItemsAdapter extends RecyclerView.Adapter<ProfileItemsAdapter.ProfileItemViewholder> {
+public class ProfileItemsAdapter extends RecyclerView.Adapter<ProfileItemsAdapter.ProfileItemViewHolder> {
 
     private List<ProfileItem> profileItems = new ArrayList<>();
     private Context context;
@@ -49,15 +49,15 @@ public class ProfileItemsAdapter extends RecyclerView.Adapter<ProfileItemsAdapte
 
 
     @Override
-    public ProfileItemViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProfileItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_profile, parent, false);
 
-        return new ProfileItemViewholder(itemView);
+        return new ProfileItemViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ProfileItemViewholder holder, int position) {
+    public void onBindViewHolder(ProfileItemViewHolder holder, int position) {
         ProfileItem profileItem = profileItems.get(position);
         holder.image.setImageDrawable(context.getDrawable(profileItem.getImage()));
         holder.image.setColorFilter(context.getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
@@ -70,14 +70,14 @@ public class ProfileItemsAdapter extends RecyclerView.Adapter<ProfileItemsAdapte
         return profileItems.size();
     }
 
-    public static class ProfileItemViewholder extends RecyclerView.ViewHolder {
+    public static class ProfileItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_iv)
         protected ImageView image;
 
         @BindView(R.id.item_name)
         protected TextView name;
 
-        public ProfileItemViewholder(View v) {
+        public ProfileItemViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
 

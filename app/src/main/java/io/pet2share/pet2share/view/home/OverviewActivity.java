@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
+import com.google.firebase.storage.FirebaseStorage;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.pet2share.pet2share.R;
@@ -33,7 +35,6 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
         viewPager.setAdapter(new OverviewActivityViewPagerAdapter(getSupportFragmentManager()));
         initTabLayout();
         tabLayout.getTabAt(1).select();
-
 
     }
 

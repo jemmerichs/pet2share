@@ -19,7 +19,7 @@
             android:layout_height="80dp"
             android:layout_gravity="bottom|center"
             android:layout_weight="1"
-            android:src="@drawable/profile" />
+            android:src="@drawable/image_placeholder" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -34,13 +34,13 @@
                 style="@style/Base.TextAppearance.AppCompat.SearchResult.Subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Marcel Bausch" />
+                android:text="@string/label_loading" />
 
             <TextView
-                android:id="@+id/theme_tv"
+                android:id="@+id/motto_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tiere sind das Rückrat unserer Nation" />
+                android:text="@string/label_loading" />
 
             <RatingBar
                 android:id="@+id/ratingBar"
