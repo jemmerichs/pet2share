@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
@@ -46,14 +47,14 @@ public class ProfileLoader extends FirebaseLoader {
 
     public void loadProfilePicture(String uid, final ProfilePictureLoadingInterface finishingInterface) {
         StorageReference picture = getFirebaseStorage().getReference().child(String.format("profile/picture/%s.jpg",uid));
-        final long ONE_MEGABYTE = 1024*1024;
-        picture.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
+        picture.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
             @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bmp= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                finishingInterface.applyInformation(bmp);
+            public void onSuccess(StorageMetadata storageMetadata) {
+                finishingInterface.applyInformation(storageMetadata.getDownloadUrl().toString());
             }
         });
+
 
     }
 

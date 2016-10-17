@@ -20,4 +20,5 @@
     <string name="offers_fragment_title">Offers</string>
     <string name="profile_fragment_title">Profile</string>
     <string name="label_loading">Loading...</string>
+    <string name="timestring">dd.MM.yyyy HH:mm</string>
 </resources>

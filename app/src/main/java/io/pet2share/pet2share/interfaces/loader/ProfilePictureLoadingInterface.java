@@ -11,5 +11,5 @@ import io.pet2share.pet2share.model.user.Profile;
  */
 
 public interface ProfilePictureLoadingInterface {
-    public abstract void applyInformation(Bitmap profilePicture);
+    public abstract void applyInformation(String profilePictureURL);
 }

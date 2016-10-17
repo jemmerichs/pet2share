@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.w3c.dom.Text;
 
 import butterknife.BindView;
@@ -54,8 +56,8 @@ public class ProfileFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         recyclerView.setAdapter(new ProfileItemsAdapter(getContext()));
-        //setProfileName();
-        // setProfilePicture();
+        setProfileName();
+        setProfilePicture();
         return view;
     }
 
@@ -72,8 +74,8 @@ public class ProfileFragment extends Fragment {
     private void setProfilePicture() {
         ProfileLoader.getInstance().loadProfilePicture(((BasicActivity) getActivity()).getCurrentUid(), new ProfilePictureLoadingInterface() {
             @Override
-            public void applyInformation(Bitmap profilePicture) {
-                imageView.setImageBitmap(profilePicture);
+            public void applyInformation(String profilePictureURL) {
+                Picasso.with(getContext()).load(profilePictureURL).into(imageView);
             }
         });
     }
