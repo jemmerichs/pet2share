@@ -10,12 +10,13 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import io.pet2share.pet2share.R;
+import io.pet2share.pet2share.common.BasicOverviewActivityFragment;
 
 /**
  * Created by Muki-Zenbook on 11.10.2016.
  */
 
-public class OffersFragment extends Fragment {
+public class OffersFragment extends BasicOverviewActivityFragment {
 
     @BindView(R.id.recycler_view)
     protected RecyclerView recyclerView;

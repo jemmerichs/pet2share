@@ -17,7 +17,7 @@ public class Offer {
     private String name;
     private long startdate;
     private long enddate;
-    private Double latitude,longitude;
+    private Double latitude, longitude;
     private ArrayList<Long> timeSlots;
     private String description;
 
@@ -61,7 +61,7 @@ public class Offer {
 
     public ArrayList<Date> getTimeSlots() {
         ArrayList<Date> dates = new ArrayList<>();
-        for(long dateStamp : timeSlots) {
+        for (long dateStamp : timeSlots) {
             dates.add(new Date(dateStamp));
         }
         return dates;
@@ -71,21 +71,35 @@ public class Offer {
         return description;
     }
 
-    public HashMap<String, Object> toMap(){
-        HashMap<String,Object> map = new HashMap<>();
+    public HashMap<String, Object> toMap() {
+        HashMap<String, Object> map = new HashMap<>();
 
-        map.put("name",name);
+        map.put("name", name);
         map.put("startdate", startdate);
         map.put("enddate", enddate);
-        map.put("longitude",longitude);
-        map.put("latitude",latitude);
-        map.put("description",description);
+        map.put("longitude", longitude);
+        map.put("latitude", latitude);
+        map.put("description", description);
         ArrayList<Long> timeslots = new ArrayList<>();
-        for(long date : timeSlots) {
+        for (long date : timeSlots) {
             timeslots.add(date);
         }
-        map.put("timeSlots",timeslots);
+        map.put("timeSlots", timeslots);
 
         return map;
     }
+
+    public double calculateDistanceToOfferinMeters(double latitude, double longitude) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(latitude - this.latitude);
+        double dLng = Math.toRadians(longitude - this.longitude);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(latitude)) * Math.cos(Math.toRadians(this.latitude)) *
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        float dist = (float) (earthRadius * c);
+
+        return dist;
+    }
 }
+

@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.common.BasicActivity;
+import io.pet2share.pet2share.common.BasicOverviewActivityFragment;
 import io.pet2share.pet2share.common.DividerItemDecoration;
 import io.pet2share.pet2share.data.profile.ProfileLoader;
 import io.pet2share.pet2share.interfaces.loader.ProfileInformationLoadingInterface;
@@ -32,7 +33,7 @@ import io.pet2share.pet2share.model.user.Profile;
  * Created by Muki-Zenbook on 11.10.2016.
  */
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends BasicOverviewActivityFragment {
 
     @BindView(R.id.recycler_view)
     protected RecyclerView recyclerView;
@@ -72,7 +73,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setProfilePicture() {
-        ProfileLoader.getInstance().loadProfilePicture(((BasicActivity) getActivity()).getCurrentUid(), new ProfilePictureLoadingInterface() {
+        ProfileLoader.getInstance().loadProfilePicture(getOverviewActivity().getCurrentUid(), new ProfilePictureLoadingInterface() {
             @Override
             public void applyInformation(String profilePictureURL) {
                 Picasso.with(getContext()).load(profilePictureURL).into(imageView);
