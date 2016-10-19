@@ -19,6 +19,8 @@ public class Offer {
     private long enddate;
     private Double latitude, longitude;
     private ArrayList<Long> timeSlots;
+    private ArrayList<String> pictureURIs;
+    private String key;
     private String description;
 
 
@@ -30,6 +32,8 @@ public class Offer {
         this.longitude = longitude;
         this.timeSlots = timeSlots;
         this.description = description;
+        this.pictureURIs = new ArrayList<>();
+        this.key = "";
     }
 
     public void setTimeSlots(ArrayList<Long> timeSlots) {
@@ -59,12 +63,24 @@ public class Offer {
         return new Date(enddate);
     }
 
+    public ArrayList<String> getPictureURIs() {
+        return pictureURIs;
+    }
+
     public ArrayList<Date> getTimeSlots() {
         ArrayList<Date> dates = new ArrayList<>();
         for (long dateStamp : timeSlots) {
             dates.add(new Date(dateStamp));
         }
         return dates;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getDescription() {
@@ -80,11 +96,8 @@ public class Offer {
         map.put("longitude", longitude);
         map.put("latitude", latitude);
         map.put("description", description);
-        ArrayList<Long> timeslots = new ArrayList<>();
-        for (long date : timeSlots) {
-            timeslots.add(date);
-        }
-        map.put("timeSlots", timeslots);
+        map.put("timeSlots", timeSlots);
+        map.put("pictureURIs", pictureURIs);
 
         return map;
     }

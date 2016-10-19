@@ -2,6 +2,7 @@ package io.pet2share.pet2share.view.home;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Picture;
 import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import butterknife.OnClick;
 import info.hoang8f.widget.FButton;
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.common.BasicActivity;
+import io.pet2share.pet2share.data.PictureLoader;
 import io.pet2share.pet2share.data.offer.OfferLoader;
 import io.pet2share.pet2share.interfaces.loader.OfferLoadingInterface;
 import io.pet2share.pet2share.model.offer.Offer;
@@ -113,6 +115,13 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
                 /**
                  * TODO: fill Offer List
                  */
+            for(Offer offer : offers) {
+                for(String uri : offer.getPictureURIs()) {
+                    PictureLoader.getInstance().loadPictureDownloadURL(uri,url -> {
+                        System.out.println(url);
+                    });
+                }
+            }
             },latestLocation);
         } else {
             offerButton.hide();
@@ -140,7 +149,6 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
         Offer offer = new Offer("Spitz sucht einen temporären Hüter", new Date().getTime(), soon.getTime(), 49.4844656, 8.4678411, times, "Hallo, sein Name ist Spitz und er ist süß.");
 
         OfferLoader.getInstance().createOffer(getCurrentUid(), offer);
-
     }
 
     @Override
