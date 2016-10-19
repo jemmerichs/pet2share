@@ -68,7 +68,7 @@ public class OfferLoader extends FirebaseLoader {
             }
         });
     }
-    public void loadAllOffers(String uid, final OfferLoadingInterface finishingInterface, final Location locationForCalculation) {
+    public void loadAllOffers(final OfferLoadingInterface finishingInterface, final Location locationForCalculation) {
         getFirebaseDatabase().getReference(String.format("offers")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
