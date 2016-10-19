@@ -44,17 +44,17 @@ public class OfferLoader extends FirebaseLoader {
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Pet2ShareApplication.get().getString(R.string.timestring));
 
     public void loadOffersByUID(String uid, final OfferLoadingInterface finishingInterface) {
-        getFirebaseDatabase().getReference(String.format("offers/%s/",uid)).addListenerForSingleValueEvent(new ValueEventListener() {
+        getFirebaseDatabase().getReference(String.format("offers/%s/", uid)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Offer> offerList = new ArrayList<>();
                 System.out.println(dataSnapshot.getChildrenCount());
-                for(DataSnapshot offer : dataSnapshot.getChildren()) {
+                for (DataSnapshot offer : dataSnapshot.getChildren()) {
                     Offer loadedOffer = offer.getValue(Offer.class);
                     loadedOffer.setKey(offer.getKey());
                     ArrayList<Long> timeSlots = new ArrayList<>();
-                    for(DataSnapshot timeSlot : offer.child("timeslots").getChildren()) {
-                            timeSlots.add(Long.parseLong(String.valueOf(timeSlot.getValue())));
+                    for (DataSnapshot timeSlot : offer.child("timeslots").getChildren()) {
+                        timeSlots.add(Long.parseLong(String.valueOf(timeSlot.getValue())));
                     }
                     loadedOffer.setTimeSlots(timeSlots);
                     offerList.add(loadedOffer);
@@ -68,12 +68,13 @@ public class OfferLoader extends FirebaseLoader {
             }
         });
     }
+
     public void loadAllOffers(final OfferLoadingInterface finishingInterface, final Location locationForCalculation) {
         getFirebaseDatabase().getReference(String.format("offers")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Offer> offerList = new ArrayList<>();
-                for(DataSnapshot offerListOfUser:dataSnapshot.getChildren()) {
+                for (DataSnapshot offerListOfUser : dataSnapshot.getChildren()) {
                     for (DataSnapshot offer : offerListOfUser.getChildren()) {
                         Offer loadedOffer = offer.getValue(Offer.class);
                         loadedOffer.setKey(offer.getKey());
@@ -85,8 +86,8 @@ public class OfferLoader extends FirebaseLoader {
                         offerList.add(loadedOffer);
                     }
                 }
-                if(locationForCalculation!= null) {
-                    Collections.sort(offerList,(o1,o2)->(int)(o1.calculateDistanceToOfferinMeters(locationForCalculation.getLatitude(),locationForCalculation.getLongitude())-o2.calculateDistanceToOfferinMeters(locationForCalculation.getLatitude(),locationForCalculation.getLongitude())));
+                if (locationForCalculation != null) {
+                    Collections.sort(offerList, (o1, o2) -> (int) (o1.calculateDistanceToOfferinMeters(locationForCalculation.getLatitude(), locationForCalculation.getLongitude()) - o2.calculateDistanceToOfferinMeters(locationForCalculation.getLatitude(), locationForCalculation.getLongitude())));
                 }
                 finishingInterface.loadOffers(offerList);
 
@@ -100,17 +101,17 @@ public class OfferLoader extends FirebaseLoader {
     }
 
 
-
     public void createOffer(String uid, Offer offer) {
         DatabaseReference databaseReference = getFirebaseDatabase().getReference();
-        HashMap<String,Object> offerMap = offer.toMap();
+        HashMap<String, Object> offerMap = offer.toMap();
         String key = databaseReference.child("offers").child(uid).push().getKey();
         Map<String, Object> update = new HashMap<String, Object>();
-        update.put(String.format("offers/%s/%s",uid,key),offerMap);
+        update.put(String.format("offers/%s/%s", uid, key), offerMap);
+
+        offer.setKey(key);
         databaseReference.updateChildren(update).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-
             }
         });
     }
@@ -124,13 +125,13 @@ public class OfferLoader extends FirebaseLoader {
         bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
         byte[] bitmapdata = bos.toByteArray();
         ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-        uploadPictureForOffer(offer,bs);
+        uploadPictureForOffer(offer, bs);
     }
 
     private void uploadPictureForOffer(Offer offer, InputStream pictureStream) {
 
 
-        String URI = String.format("offers/%s/%s",offer.getKey(),String.valueOf(new Date().getTime())+".jpg");
+        String URI = String.format("offers/%s/%s", offer.getKey(), String.valueOf(new Date().getTime()) + ".jpg");
         StorageReference picReference = getFirebaseStorage().getReference().child(URI);
         UploadTask uploadTask = picReference.putStream(pictureStream);
         uploadTask.addOnFailureListener(new OnFailureListener() {
