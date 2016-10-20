@@ -162,6 +162,9 @@ public class OfferLoader extends FirebaseLoader {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                if(offer.getPictureURIs() == null) {
+                    offer.setPictureURIs(new ArrayList<>());
+                }
                 offer.getPictureURIs().add(URI);
                 savePictureURIs(offer);
             }
