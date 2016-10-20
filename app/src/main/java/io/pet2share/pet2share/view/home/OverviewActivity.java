@@ -2,6 +2,7 @@ package io.pet2share.pet2share.view.home;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Picture;
 import android.graphics.PorterDuff;
 import android.location.Location;
@@ -22,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,17 +44,14 @@ import static io.pet2share.pet2share.view.home.OverviewActivityViewPagerAdapter.
 
 public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    @BindView(R.id.tab_layout)
-    protected TabLayout tabLayout;
+    @BindView(R.id.tab_layout) protected TabLayout tabLayout;
 
-    @BindView(R.id.viewpager)
-    protected ViewPager viewPager;
+    @BindView(R.id.viewpager) protected ViewPager viewPager;
 
-    @BindView(R.id.offer_btn)
-    protected FloatingActionButton offerButton;
+    @BindView(R.id.offer_btn) protected FloatingActionButton offerButton;
 
     protected GoogleApiClient googleApiClient;
-    protected Location latestLocation;
+    protected Location        latestLocation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,11 +67,8 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
 
     private void initGooglePlayAPI() {
         if (googleApiClient == null) {
-            googleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
+            googleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(
+                    LocationServices.API).build();
         }
     }
 
@@ -111,18 +107,6 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
     public void onPageSelected(int position) {
         if (position == 1) {
             offerButton.show();
-            OfferLoader.getInstance().loadAllOffers(getCurrentUid(), offers -> {
-                /**
-                 * TODO: fill Offer List
-                 */
-            for(Offer offer : offers) {
-                for(String uri : offer.getPictureURIs()) {
-                    PictureLoader.getInstance().loadPictureDownloadURL(uri,url -> {
-                        System.out.println(url);
-                    });
-                }
-            }
-            },latestLocation);
         } else {
             offerButton.hide();
         }
@@ -139,22 +123,36 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
      */
     @OnClick(R.id.offer_btn)
     public void createOffer() {
-        Date soon = new Date();
+        OfferLoader.getInstance().loadAllOffers(offers -> {
+
+            if (offers != null) {
+                delete(offers);
+            }
+        }, null);
+
+        /*Date soon = new Date();
         soon.setTime(new Date().getTime() + 1000000);
         Date sooner = new Date();
         sooner.setTime(new Date().getTime() + 10000);
         ArrayList<Long> times = new ArrayList<>();
         times.add(sooner.getTime());
         times.add(soon.getTime());
-        Offer offer = new Offer("Spitz sucht einen temporären Hüter", new Date().getTime(), soon.getTime(), 49.4844656, 8.4678411, times, "Hallo, sein Name ist Spitz und er ist süß.");
+        Offer offer = new Offer("Spitz sucht einen temporären Hüter", new Date().getTime(), soon.getTime(), 49.4844656, 8.4678411, times,
+                                "Hallo, sein Name ist Spitz und er ist süß.");
 
         OfferLoader.getInstance().createOffer(getCurrentUid(), offer);
+        OfferLoader.getInstance().uploadPictureForOffer(offer,  BitmapFactory.decodeResource(this.getResources(), R.drawable.dog));
+        Offer offer2 = new Offer("Süße Katze brauch für 2 Wochen ein neues Zuhause", new Date().getTime(), soon.getTime(), 49.4844656, 8.4678411, times,
+                                "Achtung SÜSS!");
+
+        OfferLoader.getInstance().createOffer(getCurrentUid(), offer2);
+        OfferLoader.getInstance().uploadPictureForOffer(offer2,  BitmapFactory.decodeResource(this.getResources(), R.drawable.cat));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        googleApiClient.disconnect();
+        googleApiClient.disconnect();*/
     }
 
     @Override
@@ -165,7 +163,9 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this,
+                                               Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -175,8 +175,13 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        latestLocation = LocationServices.FusedLocationApi.getLastLocation(
-                googleApiClient);
+        latestLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+    }
+
+    private void delete(List<Offer> offerList) {
+        for (Offer offer : offerList) {
+            OfferLoader.getInstance().deleteOffer(offer);
+        }
     }
 
     @Override
