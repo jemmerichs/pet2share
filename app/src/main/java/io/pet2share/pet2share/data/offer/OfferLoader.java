@@ -116,6 +116,17 @@ public class OfferLoader extends FirebaseLoader {
         });
     }
 
+    public void deleteOffer(Offer offer) {
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String key = offer.getKey();
+        for(String uri : offer.getPictureURIs()) {
+            StorageReference uriReference = getFirebaseStorage().getReference().child(uri);
+            uriReference.delete();
+        }
+        getFirebaseDatabase().getReference().child("offers").child(uid).child(key).removeValue();
+    }
+
     public void uploadPictureForOffer(Offer offer, String filePath) throws FileNotFoundException {
         uploadPictureForOffer(offer, new FileInputStream(new File(filePath)));
     }
