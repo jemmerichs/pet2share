@@ -91,6 +91,10 @@ public class Offer {
         return description;
     }
 
+    public void setPictureURIs(ArrayList<String> pictureURIs) {
+        this.pictureURIs = pictureURIs;
+    }
+
     public HashMap<String, Object> toMap() {
         HashMap<String, Object> map = new HashMap<>();
 

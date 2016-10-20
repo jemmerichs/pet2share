@@ -57,6 +57,9 @@ public class OfferLoader extends FirebaseLoader {
                         timeSlots.add(Long.parseLong(String.valueOf(timeSlot.getValue())));
                     }
                     loadedOffer.setTimeSlots(timeSlots);
+                    /*if(loadedOffer.getPictureURIs()==null) {
+                        loadedOffer.setPictureURIs(new ArrayList<>());
+                    }*/
                     offerList.add(loadedOffer);
                 }
                 finishingInterface.loadOffers(offerList);
@@ -83,6 +86,9 @@ public class OfferLoader extends FirebaseLoader {
                             timeSlots.add(Long.parseLong(String.valueOf(timeSlot.getValue())));
                         }
                         loadedOffer.setTimeSlots(timeSlots);
+                       /* if(loadedOffer.getPictureURIs()==null) {
+                            loadedOffer.setPictureURIs(new ArrayList<>());
+                        }*/
                         offerList.add(loadedOffer);
                     }
                 }
@@ -120,9 +126,11 @@ public class OfferLoader extends FirebaseLoader {
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String key = offer.getKey();
-        for(String uri : offer.getPictureURIs()) {
-            StorageReference uriReference = getFirebaseStorage().getReference().child(uri);
-            uriReference.delete();
+        if(offer.getPictureURIs()!=null) {
+            for (String uri : offer.getPictureURIs()) {
+                StorageReference uriReference = getFirebaseStorage().getReference().child(uri);
+                uriReference.delete();
+            }
         }
         getFirebaseDatabase().getReference().child("offers").child(uid).child(key).removeValue();
     }
