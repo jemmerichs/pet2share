@@ -132,7 +132,7 @@ public class OfferLoader extends FirebaseLoader {
                 uriReference.delete();
             }
         }
-        getFirebaseDatabase().getReference().child("offers").child(uid).child(key).removeValue();
+        getFirebaseDatabase().getReference().child("offers").child(uid).child(key).setValue(null);
     }
 
     public void uploadPictureForOffer(Offer offer, String filePath) throws FileNotFoundException {
