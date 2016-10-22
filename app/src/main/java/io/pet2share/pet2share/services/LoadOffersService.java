@@ -1,4 +1,4 @@
-package io.pet2share.pet2share.view.home.tabs.offers;
+package io.pet2share.pet2share.services;
 
 import android.app.IntentService;
 import android.app.ProgressDialog;
@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.support.v4.os.ResultReceiver;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ import java.util.List;
 
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.data.offer.OfferLoader;
-import io.pet2share.pet2share.interfaces.loader.OfferLoadingInterface;
 import io.pet2share.pet2share.model.offer.Offer;
 
 /**

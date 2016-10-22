@@ -1,9 +1,8 @@
 package io.pet2share.pet2share.view.home;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
-import android.graphics.Picture;
 import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,28 +12,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.view.ActionMode;
-import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.storage.FirebaseStorage;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import info.hoang8f.widget.FButton;
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.common.BasicActivity;
-import io.pet2share.pet2share.data.PictureLoader;
-import io.pet2share.pet2share.data.offer.OfferLoader;
-import io.pet2share.pet2share.interfaces.loader.OfferLoadingInterface;
-import io.pet2share.pet2share.model.offer.Offer;
+import io.pet2share.pet2share.view.create.CreateOfferActivity;
 
 import static io.pet2share.pet2share.view.home.OverviewActivityViewPagerAdapter.fragmentIcons;
 
@@ -123,14 +111,14 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
      */
     @OnClick(R.id.offer_btn)
     public void createOffer() {
-        OfferLoader.getInstance().loadAllOffers(offers -> {
+        /*OfferLoader.getInstance().loadAllOffers(offers -> {
 
             if (offers != null) {
                 delete(offers);
             }
-        }, null);
-
-        /*Date soon = new Date();
+        }, null);*/
+/*
+        Date soon = new Date();
         soon.setTime(new Date().getTime() + 1000000);
         Date sooner = new Date();
         sooner.setTime(new Date().getTime() + 10000);
@@ -142,17 +130,20 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
 
         OfferLoader.getInstance().createOffer(getCurrentUid(), offer);
         OfferLoader.getInstance().uploadPictureForOffer(offer,  BitmapFactory.decodeResource(this.getResources(), R.drawable.dog));
-        Offer offer2 = new Offer("Süße Katze brauch für 2 Wochen ein neues Zuhause", new Date().getTime(), soon.getTime(), 49.4844656, 8.4678411, times,
+        Offer offer2 = new Offer("Süße Katze braucht für 2 Wochen ein neues Zuhause", new Date().getTime(), soon.getTime(), 49.4844656, 8.4678411, times,
                                 "Achtung SÜSS!");
 
         OfferLoader.getInstance().createOffer(getCurrentUid(), offer2);
-        OfferLoader.getInstance().uploadPictureForOffer(offer2,  BitmapFactory.decodeResource(this.getResources(), R.drawable.cat));
+        OfferLoader.getInstance().uploadPictureForOffer(offer2,  BitmapFactory.decodeResource(this.getResources(), R.drawable.cat));*/
+
+        Intent intent = new Intent(this, CreateOfferActivity.class);
+        startActivity(intent);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        googleApiClient.disconnect();*/
+        googleApiClient.disconnect();
     }
 
     @Override
@@ -176,12 +167,6 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
             return;
         }
         latestLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-    }
-
-    private void delete(List<Offer> offerList) {
-        for (Offer offer : offerList) {
-            OfferLoader.getInstance().deleteOffer(offer);
-        }
     }
 
     @Override

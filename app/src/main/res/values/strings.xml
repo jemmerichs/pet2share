@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Pet2Share</string>
     <string name="action_settings">Settings</string>
+    <string name="action_delete">Delete all offers (dev)</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="offer_btn">Offer</string>
     <string name="search_btn">Search</string>

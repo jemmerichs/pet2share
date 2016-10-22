@@ -25,14 +25,21 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".signin.LoginActivity"
             android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.create.CreateOfferActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.home.OverviewActivity"
             android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +47,10 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".view.home.tabs.offers.LoadOffersService" />
+        <service android:name=".services.LoadOffersService" />
+        <service android:name=".services.DeleteAllOffersService" />
+        <service android:name=".services.CreateOfferService" />
+
     </application>
 
 </manifest>
