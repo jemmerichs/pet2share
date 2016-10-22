@@ -20,6 +20,7 @@ import java.util.List;
 
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.data.offer.OfferLoader;
+import io.pet2share.pet2share.interfaces.loader.OfferCreationFinishedInterface;
 import io.pet2share.pet2share.model.offer.Offer;
 
 /**
@@ -47,8 +48,9 @@ public class CreateOfferService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         unpackIntent(intent);
-        OfferLoader.getInstance().createOffer(FirebaseAuth.getInstance().getCurrentUser().getUid(), offer);
-        OfferLoader.getInstance().uploadPictureForOffer(offer, bitmap);
+        OfferLoader.getInstance().createOffer(FirebaseAuth.getInstance().getCurrentUser().getUid(), offer, offerCreated -> {
+            OfferLoader.getInstance().uploadPictureForOffer(offerCreated, bitmap);
+        });
         Bundle bundle = new Bundle();
         bundle.putInt(SERVICE_RESULT_KEY, SUCCESS_CODE);
         resultReceiver.send(CREATE_OFFER_SERVICE_CODE, bundle);

@@ -76,15 +76,15 @@ public class LoadOffersService extends IntentService {
         times.add(soon.getTime());
         Offer offer = new Offer("Spitz sucht einen temporären Hüter", new Date().getTime(), soon.getTime(), 49.4844656, 8.4678411, times,
                                 "Hallo, sein Name ist Spitz und er ist süß.");
-        OfferLoader.getInstance().createOffer(FirebaseAuth.getInstance().getCurrentUser().getUid(), offer);
-        OfferLoader.getInstance().uploadPictureForOffer(offer, BitmapFactory.decodeResource(this.getResources(), R.drawable.dog));
+        OfferLoader.getInstance().createOffer(FirebaseAuth.getInstance().getCurrentUser().getUid(), offer, offerCreated->OfferLoader.getInstance().uploadPictureForOffer(offerCreated, BitmapFactory.decodeResource(this.getResources(), R.drawable.dog)));
+
 
 
         Offer offer2 = new Offer("Tigali sucht einen ebenfalls eine befristete Unterkunft", new Date().getTime(), soon.getTime(),
                                  49.4844656, 8.4678411, times, "Achtung SÜSS!");
 
-        OfferLoader.getInstance().createOffer(FirebaseAuth.getInstance().getCurrentUser().getUid(), offer2);
-        OfferLoader.getInstance().uploadPictureForOffer(offer2, BitmapFactory.decodeResource(this.getResources(), R.drawable.cat));
+        OfferLoader.getInstance().createOffer(FirebaseAuth.getInstance().getCurrentUser().getUid(), offer2, offerCreated-> OfferLoader.getInstance().uploadPictureForOffer(offer2, BitmapFactory.decodeResource(this.getResources(), R.drawable.cat)));
+
 
     }
 

@@ -31,6 +31,7 @@ import java.util.Map;
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.common.FirebaseLoader;
 import io.pet2share.pet2share.common.Pet2ShareApplication;
+import io.pet2share.pet2share.interfaces.loader.OfferCreationFinishedInterface;
 import io.pet2share.pet2share.interfaces.loader.OfferLoadingInterface;
 import io.pet2share.pet2share.model.offer.Offer;
 
@@ -107,7 +108,7 @@ public class OfferLoader extends FirebaseLoader {
     }
 
 
-    public void createOffer(String uid, Offer offer) {
+    public void createOffer(String uid, Offer offer, OfferCreationFinishedInterface finishedInterface) {
         DatabaseReference databaseReference = getFirebaseDatabase().getReference();
         HashMap<String, Object> offerMap = offer.toMap();
         String key = databaseReference.child("offers").child(uid).push().getKey();
@@ -118,6 +119,7 @@ public class OfferLoader extends FirebaseLoader {
         databaseReference.updateChildren(update).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                finishedInterface.receiveOffer(offer);
             }
         });
     }
