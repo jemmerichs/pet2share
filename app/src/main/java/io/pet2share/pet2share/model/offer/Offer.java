@@ -25,10 +25,11 @@ public class Offer {
     private ArrayList<String> pictureURIs;
     private String            key;
     private String            description;
+    private String userId;
 
 
     public Offer(String name, long startdate, long enddate, Double latitude, Double longitude, ArrayList<Long> timeSlots,
-                 String description) {
+                 String description, String userId) {
         this.name = name;
         this.startdate = startdate;
         this.enddate = enddate;
@@ -38,6 +39,7 @@ public class Offer {
         this.description = description;
         this.pictureURIs = new ArrayList<>();
         this.key = "";
+        this.userId = userId;
     }
 
     public void setTimeSlots(ArrayList<Long> timeSlots) {
@@ -108,6 +110,14 @@ public class Offer {
         map.put("pictureURIs", pictureURIs);
 
         return map;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public double calculateDistanceToOfferinMeters(double latitude, double longitude) {

@@ -54,6 +54,7 @@ public class OfferLoader extends FirebaseLoader {
                 System.out.println(dataSnapshot.getChildrenCount());
                 for (DataSnapshot offer : dataSnapshot.getChildren()) {
                     Offer loadedOffer = offer.getValue(Offer.class);
+                    loadedOffer.setUserId(uid);
                     loadedOffer.setKey(offer.getKey());
                     ArrayList<Long> timeSlots = new ArrayList<>();
                     for (DataSnapshot timeSlot : offer.child("timeslots").getChildren()) {
@@ -75,6 +76,31 @@ public class OfferLoader extends FirebaseLoader {
         });
     }
 
+    public void loadSingleOffer(String uid, String key, final OfferLoadingInterface finishingInterface) {
+        getFirebaseDatabase().getReference(String.format("offers/%s/%s",uid,key)).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Offer offer = dataSnapshot.getValue(Offer.class);
+                offer.setKey(dataSnapshot.getKey());
+                offer.setUserId(uid);
+                ArrayList<Long> timeSlots = new ArrayList<>();
+                for (DataSnapshot timeSlot : dataSnapshot.child("timeslots").getChildren()) {
+                    timeSlots.add(Long.parseLong(String.valueOf(timeSlot.getValue())));
+                }
+                offer.setTimeSlots(timeSlots);
+                ArrayList<Offer> offers = new ArrayList<Offer>();
+                offers.add(offer);
+                finishingInterface.loadOffers(offers);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void loadAllOffers(final OfferLoadingInterface finishingInterface, final Location locationForCalculation) {
         getFirebaseDatabase().getReference(String.format("offers")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -83,6 +109,7 @@ public class OfferLoader extends FirebaseLoader {
                 for (DataSnapshot offerListOfUser : dataSnapshot.getChildren()) {
                     for (DataSnapshot offer : offerListOfUser.getChildren()) {
                         Offer loadedOffer = offer.getValue(Offer.class);
+                        loadedOffer.setUserId(offerListOfUser.getKey());
                         loadedOffer.setKey(offer.getKey());
                         ArrayList<Long> timeSlots = new ArrayList<>();
                         for (DataSnapshot timeSlot : offer.child("timeslots").getChildren()) {

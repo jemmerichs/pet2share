@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,7 +68,7 @@ public class CreateOfferActivity extends BasicActivity implements Receiver {
         times.add(sooner.getTime());
         times.add(soon.getTime());
         Offer offer = new Offer(title.getText().toString(), new Date().getTime(), soon.getTime(), 49.4844656, 8.4678411, times,
-                                description.getText().toString());
+                                description.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid());
         progressDialog = new ProgressDialog(this);
         CreateOfferService.startCreateOfferService(this, progressDialog, serviceResultReceiver, offer, bitmap);
 

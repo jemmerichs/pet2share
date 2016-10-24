@@ -1,7 +1,9 @@
 package io.pet2share.pet2share.view.home.tabs.offers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.data.PictureLoader;
 import io.pet2share.pet2share.interfaces.loader.PictureLoadingInterface;
 import io.pet2share.pet2share.model.offer.Offer;
+import io.pet2share.pet2share.view.detail.DetailOfferActivity;
 import io.pet2share.pet2share.view.home.tabs.profile.ProfileItem;
 import io.pet2share.pet2share.view.home.tabs.profile.ProfileItemsAdapter;
 
@@ -50,6 +53,14 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferItemVie
 
         Offer offer = offerList.get(position);
         holder.name.setText(offer.getName());
+
+        holder.cardView.setOnClickListener(v -> {
+            Intent i = new Intent(context,DetailOfferActivity.class);
+            i.putExtra("uid",offer.getUserId());
+            i.putExtra("key",offer.getKey());
+            context.startActivity(i);
+        });
+
         if (offer.getPictureURIs() != null) {
             PictureLoader.getInstance().loadPictureDownloadURL(offer.getPictureURIs().get(0), url -> {
                 Picasso.with(context).load(url).placeholder(R.drawable.image_placeholder).into(holder.image);
@@ -64,11 +75,14 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferItemVie
         return offerList.size();
     }
 
+
     public static class OfferItemViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.image) protected ImageView image;
 
         @BindView(R.id.name) protected TextView name;
+
+        @BindView(R.id.cardView) protected CardView cardView;
 
         public OfferItemViewHolder(View v) {
             super(v);
