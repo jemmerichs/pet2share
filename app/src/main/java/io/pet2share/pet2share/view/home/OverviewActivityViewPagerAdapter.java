@@ -12,6 +12,7 @@ import java.util.List;
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.common.Pet2ShareApplication;
 import io.pet2share.pet2share.view.home.tabs.MessagesFragment;
+import io.pet2share.pet2share.view.home.tabs.offers.DiscoverFragment;
 import io.pet2share.pet2share.view.home.tabs.offers.OffersFragment;
 import io.pet2share.pet2share.view.home.tabs.profile.ProfileFragment;
 
@@ -34,7 +35,7 @@ class OverviewActivityViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     private void initFragments() {
-        fragmentList.add(new MessagesFragment());
+        fragmentList.add(new DiscoverFragment());
         fragmentTitleList.add(context.getString(R.string.messages_fragment_title));
         fragmentIcons.add(context.getDrawable(R.drawable.vector_message));
         fragmentList.add(new OffersFragment());

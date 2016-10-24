@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.common.BasicActivity;
+import io.pet2share.pet2share.data.offer.OfferLoader;
 import io.pet2share.pet2share.view.create.CreateOfferActivity;
 
 import static io.pet2share.pet2share.view.home.OverviewActivityViewPagerAdapter.fragmentIcons;
@@ -51,6 +52,10 @@ public class OverviewActivity extends BasicActivity implements TabLayout.OnTabSe
         initTabLayout();
         tabLayout.getTabAt(1).select();
         initGooglePlayAPI();
+
+        OfferLoader.getInstance().loadAllOffers(offers -> {
+            OfferLoader.getInstance().setOffersForDiscovery(offers);
+        },null);
     }
 
     private void initGooglePlayAPI() {

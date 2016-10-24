@@ -44,6 +44,8 @@ public class OfferLoader extends FirebaseLoader {
     private static OfferLoader instance = new OfferLoader();
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Pet2ShareApplication.get().getString(R.string.timestring));
 
+    private ArrayList<Offer> offersForDiscovery = new ArrayList<>();
+
     public void loadOffersByUID(String uid, final OfferLoadingInterface finishingInterface) {
         getFirebaseDatabase().getReference(String.format("offers/%s/", uid)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -187,5 +189,13 @@ public class OfferLoader extends FirebaseLoader {
 
     public SimpleDateFormat getSimpleDateFormat() {
         return simpleDateFormat;
+    }
+
+    public ArrayList<Offer> getOffersForDiscovery() {
+        return offersForDiscovery;
+    }
+
+    public void setOffersForDiscovery(ArrayList<Offer> offersForDiscovery) {
+        this.offersForDiscovery = offersForDiscovery;
     }
 }
