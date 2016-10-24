@@ -52,7 +52,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferItemVie
         holder.name.setText(offer.getName());
         if (offer.getPictureURIs() != null) {
             PictureLoader.getInstance().loadPictureDownloadURL(offer.getPictureURIs().get(0), url -> {
-                Picasso.with(context).load(url).into(holder.image);
+                Picasso.with(context).load(url).placeholder(R.drawable.image_placeholder).into(holder.image);
             });
         }
         holder.image.setImageDrawable(context.getDrawable(R.drawable.image_placeholder));
