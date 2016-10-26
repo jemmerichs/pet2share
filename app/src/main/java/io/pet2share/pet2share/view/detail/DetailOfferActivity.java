@@ -58,10 +58,10 @@ public class DetailOfferActivity extends AppCompatActivity {
     private void loadOffer() {
         String uid = getIntent().getExtras().getString("uid");
         String key = getIntent().getExtras().getString("key");
-        OfferLoader.getInstance().loadSingleOffer(uid,key,offers -> initOffer(offers.get(0)));
+        OfferLoader.getInstance().loadSingleOffer(uid, key, offers -> initOffer(offers.get(0)));
     }
 
-    private void initOffer(Offer offer){
+    private void initOffer(Offer offer) {
         this.offer = offer;
         this.setTitle(offer.getName());
         this.textViewDescription.setText(offer.getDescription());
@@ -71,12 +71,11 @@ public class DetailOfferActivity extends AppCompatActivity {
 
         int days = Days.daysBetween(start.toLocalDate(), end.toLocalDate()).getDays();
 
-        textViewDuration.setText(String.valueOf(days)+"d");
+        textViewDuration.setText(String.valueOf(days) + "d");
 
-        if(offer.getPictureURIs()!=null) {
-            PictureLoader.getInstance().loadPictureDownloadURL(offer.getPictureURIs().get(0),url -> Picasso.with(this).load(url).placeholder(R.drawable.image_placeholder).into(offerImageView));
-        }
-        else {
+        if (offer.getPictureURIs() != null) {
+            PictureLoader.getInstance().loadPictureDownloadURL(offer.getPictureURIs().get(0), url -> Picasso.with(this).load(url).placeholder(R.drawable.image_placeholder).into(offerImageView));
+        } else {
             offerImageView.setVisibility(View.GONE);
         }
 

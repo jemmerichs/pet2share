@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
 import butterknife.BindView;
@@ -18,6 +21,7 @@ import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.common.BasicOverviewActivityFragment;
 import io.pet2share.pet2share.common.Receiver;
 import io.pet2share.pet2share.common.ServiceResultReceiver;
+import io.pet2share.pet2share.controller.EventBusMessage;
 import io.pet2share.pet2share.services.LoadOffersService;
 
 /**
@@ -26,10 +30,12 @@ import io.pet2share.pet2share.services.LoadOffersService;
 
 public class OffersFragment extends BasicOverviewActivityFragment implements Receiver {
 
-    @BindView(R.id.recycler_view) protected RecyclerView recyclerView;
+    @BindView(R.id.recycler_view)
+    protected RecyclerView recyclerView;
 
     private ServiceResultReceiver serviceResultReceiver;
     private ProgressDialog progressDialog;
+
 
     @Nullable
     @Override
@@ -37,13 +43,32 @@ public class OffersFragment extends BasicOverviewActivityFragment implements Rec
         View view = inflater.inflate(R.layout.fragment_offers, container, false);
         ButterKnife.bind(this, view);
         setupResultReceiver();
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Loading...");
-        LoadOffersService.startLoadRestaurantService(getActivity(), progressDialog, serviceResultReceiver);
-
-
+        refresh();
         return view;
+
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EventBusMessage event) {
+        refresh();
+    }
+
+    ;
 
     private void setupResultReceiver() {
         serviceResultReceiver = new ServiceResultReceiver(new Handler());
@@ -53,9 +78,16 @@ public class OffersFragment extends BasicOverviewActivityFragment implements Rec
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         progressDialog.dismiss();
-        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(new OfferAdapter(Parcels.unwrap(resultData.getParcelable(LoadOffersService.offersKey)), getActivity()));
+
+    }
+
+    public void refresh() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Loading...");
+        LoadOffersService.startLoadRestaurantService(getActivity(), progressDialog, serviceResultReceiver);
 
     }
 }

@@ -5,22 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.os.ResultReceiver;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
-import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.data.offer.OfferLoader;
-import io.pet2share.pet2share.interfaces.loader.OfferCreationFinishedInterface;
 import io.pet2share.pet2share.model.offer.Offer;
 
 /**
@@ -29,17 +21,17 @@ import io.pet2share.pet2share.model.offer.Offer;
 
 public class CreateOfferService extends IntentService {
 
-    public final static  int    CREATE_OFFER_SERVICE_CODE = 2;
-    public final static  String SERVICE_RESULT_KEY        = "RESULT";
-    public final static  int    SUCCESS_CODE              = 1;
-    public final static  int    FAILURE_CODE              = 2;
-    public final static  String OFFER_KEY                 = "OFFER";
-    public final static  String BITMAPS_URI_KEY           = "BITMAP";
-    private final static String RESULT_RECEIVER_KEY       = "RECEIVER";
+    public final static int CREATE_OFFER_SERVICE_CODE = 2;
+    public final static String SERVICE_RESULT_KEY = "RESULT";
+    public final static int SUCCESS_CODE = 1;
+    public final static int FAILURE_CODE = 2;
+    public final static String OFFER_KEY = "OFFER";
+    public final static String BITMAPS_URI_KEY = "BITMAP";
+    private final static String RESULT_RECEIVER_KEY = "RECEIVER";
 
     private ResultReceiver resultReceiver;
-    private Offer          offer;
-    private Bitmap         bitmap;
+    private Offer offer;
+    private Bitmap bitmap;
 
     public CreateOfferService() {
         super("CreateOfferService");
@@ -49,7 +41,8 @@ public class CreateOfferService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         unpackIntent(intent);
         OfferLoader.getInstance().createOffer(FirebaseAuth.getInstance().getCurrentUser().getUid(), offer, offerCreated -> {
-            OfferLoader.getInstance().uploadPictureForOffer(offerCreated, bitmap);
+            if (bitmap != null)
+                OfferLoader.getInstance().uploadPictureForOffer(offerCreated, bitmap);
         });
         Bundle bundle = new Bundle();
         bundle.putInt(SERVICE_RESULT_KEY, SUCCESS_CODE);

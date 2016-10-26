@@ -3,23 +3,21 @@ package io.pet2share.pet2share.view.create;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +26,6 @@ import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.common.BasicActivity;
 import io.pet2share.pet2share.common.Receiver;
 import io.pet2share.pet2share.common.ServiceResultReceiver;
-import io.pet2share.pet2share.data.offer.OfferLoader;
 import io.pet2share.pet2share.model.offer.Offer;
 import io.pet2share.pet2share.services.CreateOfferService;
 
@@ -38,15 +35,23 @@ import io.pet2share.pet2share.services.CreateOfferService;
 
 public class CreateOfferActivity extends BasicActivity implements Receiver {
 
-    @BindView(R.id.insert) protected      Button    insert;
-    @BindView(R.id.title) protected       EditText  title;
-    @BindView(R.id.description) protected EditText  description;
-    @BindView(R.id.image) protected       ImageView imageView;
-
+    @BindView(R.id.insert)
+    protected Button insert;
+    @BindView(R.id.title)
+    protected EditText title;
+    @BindView(R.id.description)
+    protected EditText description;
+    @BindView(R.id.image)
+    protected ImageView imageView;
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
 
     private ServiceResultReceiver serviceResultReceiver;
-    private ProgressDialog        progressDialog;
-    private Bitmap                bitmap;
+    private ProgressDialog progressDialog;
+    private Bitmap bitmap;
+
+    public static final int REQUEST_CODE = 1;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +60,10 @@ public class CreateOfferActivity extends BasicActivity implements Receiver {
         ButterKnife.bind(this);
         serviceResultReceiver = new ServiceResultReceiver(new Handler());
         serviceResultReceiver.setReceiver(this);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.create_offer);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_cancel);
     }
 
     @OnClick(R.id.insert)
@@ -68,7 +77,7 @@ public class CreateOfferActivity extends BasicActivity implements Receiver {
         times.add(sooner.getTime());
         times.add(soon.getTime());
         Offer offer = new Offer(title.getText().toString(), new Date().getTime(), soon.getTime(), 49.4844656, 8.4678411, times,
-                                description.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                description.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid());
         progressDialog = new ProgressDialog(this);
         CreateOfferService.startCreateOfferService(this, progressDialog, serviceResultReceiver, offer, bitmap);
 
@@ -76,9 +85,6 @@ public class CreateOfferActivity extends BasicActivity implements Receiver {
 
     @OnClick(R.id.image)
     protected void addPhoto(View view) {
-        File imageFolder = new File(getCacheDir() + "/images");
-        imageFolder.mkdir();
-        File image = new File(imageFolder, String.valueOf(UUID.randomUUID()));
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(takePictureIntent, 0);
 
@@ -87,15 +93,29 @@ public class CreateOfferActivity extends BasicActivity implements Receiver {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        bitmap = (Bitmap) data.getExtras().get("data");
-
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageBitmap(bitmap);
-
+        if (data.getExtras() != null) {
+            bitmap = (Bitmap) data.getExtras().get("data");
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setImageBitmap(bitmap);
+        }
     }
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         progressDialog.dismiss();
+        onBackPressed();
+
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

@@ -23,4 +23,6 @@
     <string name="label_loading">Loading...</string>
     <string name="timestring">dd.MM.yyyy HH:mm</string>
     <string name="title_activity_detail_offer">DetailOfferActivity</string>
+    <string name="menu_refresh">Refresh offers</string>
+    <string name="create_offer">Create an offer</string>
 </resources>
