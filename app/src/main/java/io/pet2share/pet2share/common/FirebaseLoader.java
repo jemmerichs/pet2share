@@ -1,5 +1,6 @@
 package io.pet2share.pet2share.common;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -10,12 +11,16 @@ import com.google.firebase.storage.FirebaseStorage;
 public class FirebaseLoader {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     public FirebaseDatabase getFirebaseDatabase() {
         return firebaseDatabase;
     }
-
     public FirebaseStorage getFirebaseStorage() {
         return firebaseStorage;
+    }
+
+    public FirebaseAuth getFirebaseAuth() {
+        return firebaseAuth;
     }
 }

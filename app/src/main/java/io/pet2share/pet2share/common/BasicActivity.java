@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import io.pet2share.pet2share.data.conversation.ConversationLoader;
 import io.pet2share.pet2share.signin.LoginActivity;
 
 
@@ -27,6 +28,7 @@ public class BasicActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             System.out.println(auth.getCurrentUser().getEmail());
+            ConversationLoader.getINSTANCE().fireUp();
         } else {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);

@@ -32,6 +32,7 @@ import io.pet2share.pet2share.common.DividerItemDecoration;
 import io.pet2share.pet2share.common.Receiver;
 import io.pet2share.pet2share.common.RecyclerItemClickListener;
 import io.pet2share.pet2share.common.ServiceResultReceiver;
+import io.pet2share.pet2share.data.conversation.ConversationLoader;
 import io.pet2share.pet2share.data.profile.ProfileLoader;
 import io.pet2share.pet2share.interfaces.loader.ProfileInformationLoadingInterface;
 import io.pet2share.pet2share.interfaces.loader.ProfilePictureLoadingInterface;
@@ -45,15 +46,19 @@ import io.pet2share.pet2share.services.DeleteAllOffersService;
 public class ProfileFragment extends BasicOverviewActivityFragment implements RecyclerItemClickListener, Receiver {
 
     private ServiceResultReceiver serviceResultReceiver;
-    private ProgressDialog        progressDialog;
+    private ProgressDialog progressDialog;
 
-    @BindView(R.id.recycler_view) protected RecyclerView recyclerView;
+    @BindView(R.id.recycler_view)
+    protected RecyclerView recyclerView;
 
-    @BindView(R.id.profile_iv) protected ImageView imageView;
+    @BindView(R.id.profile_iv)
+    protected ImageView imageView;
 
-    @BindView(R.id.name_tv) protected TextView name;
+    @BindView(R.id.name_tv)
+    protected TextView name;
 
-    @BindView(R.id.motto_tv) protected TextView motto;
+    @BindView(R.id.motto_tv)
+    protected TextView motto;
 
     @Nullable
     @Override
@@ -75,6 +80,9 @@ public class ProfileFragment extends BasicOverviewActivityFragment implements Re
     @Override
     public void onItemClicked(int itemPosition) {
         switch (itemPosition) {
+            case 4:
+                ConversationLoader.getINSTANCE().sendMessage("-KVzbaJjV1NsgVKLtY-S","Hi there, I'd like to rent your pet!");
+                break;
             case 6:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setPositiveButton("OK", (dialog, which) -> {
@@ -86,7 +94,7 @@ public class ProfileFragment extends BasicOverviewActivityFragment implements Re
                 builder.setTitle("Delete all offers ?");
                 builder.setMessage("This will remove all current showing offers permanently");
                 builder.create().show();
-
+                break;
         }
         Toast.makeText(getActivity(), "Clicked: " + itemPosition, Toast.LENGTH_LONG).show();
     }
@@ -103,13 +111,13 @@ public class ProfileFragment extends BasicOverviewActivityFragment implements Re
 
     private void setProfileName() {
         ProfileLoader.getInstance().loadProfileInformation(((BasicActivity) getActivity()).getCurrentUid(),
-                                                           new ProfileInformationLoadingInterface() {
-                                                               @Override
-                                                               public void applyInformation(Profile profile) {
-                                                                   name.setText(profile.getFirstname() + " " + profile.getLastname());
-                                                                   motto.setText(profile.getMotto());
-                                                               }
-                                                           });
+                new ProfileInformationLoadingInterface() {
+                    @Override
+                    public void applyInformation(Profile profile) {
+                        name.setText(profile.getFirstname() + " " + profile.getLastname());
+                        motto.setText(profile.getMotto());
+                    }
+                });
     }
 
     private void setProfilePicture() {

@@ -47,15 +47,7 @@ public class ProfileLoader extends FirebaseLoader {
 
     public void loadProfilePicture(String uid, final ProfilePictureLoadingInterface finishingInterface) {
         StorageReference picture = getFirebaseStorage().getReference().child(String.format("profile/picture/%s.jpg",uid));
-
-        picture.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-            @Override
-            public void onSuccess(StorageMetadata storageMetadata) {
-                finishingInterface.applyInformation(storageMetadata.getDownloadUrl().toString());
-            }
-        });
-
-
+        picture.getMetadata().addOnSuccessListener(storageMetadata -> finishingInterface.applyInformation(storageMetadata.getDownloadUrl().toString()));
     }
 
     public void saveProfileInformation( String firstname, String lastname, String gender, final ProfileInformationLoadingInterface finishingInterface){

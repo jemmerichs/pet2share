@@ -19,7 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.data.PictureLoader;
+import io.pet2share.pet2share.data.conversation.ConversationLoader;
 import io.pet2share.pet2share.data.offer.OfferLoader;
+import io.pet2share.pet2share.model.conversation.Conversation;
 import io.pet2share.pet2share.model.offer.Offer;
 
 public class DetailOfferActivity extends AppCompatActivity {
@@ -47,8 +49,7 @@ public class DetailOfferActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                ConversationLoader.getINSTANCE().createConversation(getIntent().getExtras().getString("uid"),getIntent().getExtras().getString("key"));
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
