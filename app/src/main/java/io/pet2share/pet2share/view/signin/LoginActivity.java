@@ -1,4 +1,4 @@
-package io.pet2share.pet2share.signin;
+package io.pet2share.pet2share.view.signin;
 
 import android.content.Intent;
 import android.os.Bundle;
