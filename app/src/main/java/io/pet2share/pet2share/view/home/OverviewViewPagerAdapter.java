@@ -13,7 +13,7 @@ import java.util.List;
 
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.common.Pet2ShareApplication;
-import io.pet2share.pet2share.view.home.tabs.MessagesFragment;
+import io.pet2share.pet2share.view.home.tabs.message.MessagesFragment;
 import io.pet2share.pet2share.view.home.tabs.offers.OffersFragment;
 import io.pet2share.pet2share.view.home.tabs.profile.ProfileFragment;
 

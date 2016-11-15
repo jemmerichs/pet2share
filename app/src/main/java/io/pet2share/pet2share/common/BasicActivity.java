@@ -7,7 +7,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import io.pet2share.pet2share.data.conversation.ConversationLoader;
-import io.pet2share.pet2share.signin.LoginActivity;
+import io.pet2share.pet2share.view.signin.LoginActivity;
 
 
 /**
