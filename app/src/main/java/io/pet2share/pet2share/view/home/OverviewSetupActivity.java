@@ -156,7 +156,7 @@ public abstract class OverviewSetupActivity extends BasicActivity implements Vie
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_overview, menu);
+        getMenuInflater().inflate(R.menu.menu_overvi, menu);
         return true;
     }
 
@@ -166,6 +166,9 @@ public abstract class OverviewSetupActivity extends BasicActivity implements Vie
             case R.id.refresh_offers:
                 handleRefreshMenuItemPressed();
                 return true;
+            case R.id.filter_list:
+                showFilterDialog();
+                return true;
             case android.R.id.home:
                 Toast.makeText(this, "HOME", Toast.LENGTH_SHORT).show();
                 return true;
@@ -173,6 +176,8 @@ public abstract class OverviewSetupActivity extends BasicActivity implements Vie
         return super.onOptionsItemSelected(item);
     }
 
+
+    abstract void showFilterDialog();
 
     abstract void handleRefreshMenuItemPressed();
 }

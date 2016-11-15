@@ -21,32 +21,43 @@ public class Offer {
     private long   startdate;
     private long   enddate;
     private Double latitude, longitude;
-    private ArrayList<Long>   timeSlots;
+    private String   meetings;
     private ArrayList<String> pictureURIs;
     private String            key;
     private String            description;
     private String userId;
+    private String category;
 
 
-    public Offer(String name, long startdate, long enddate, Double latitude, Double longitude, ArrayList<Long> timeSlots,
-                 String description, String userId) {
+    public Offer(String name, long startdate, long enddate, Double latitude, Double longitude, String meetings,
+                 String description, String category, String userId) {
         this.name = name;
         this.startdate = startdate;
         this.enddate = enddate;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.timeSlots = timeSlots;
+        this.meetings = meetings;
         this.description = description;
         this.pictureURIs = new ArrayList<>();
         this.key = "";
         this.userId = userId;
+        this.category = category;
     }
 
-    public void setTimeSlots(ArrayList<Long> timeSlots) {
-        this.timeSlots = timeSlots;
+    public void setMeetings(String   meetings) {
+        this.meetings = meetings;
     }
 
     public Offer() {
+
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Double getLongitude() {
@@ -73,12 +84,8 @@ public class Offer {
         return pictureURIs;
     }
 
-    public ArrayList<Date> getTimeSlots() {
-        ArrayList<Date> dates = new ArrayList<>();
-        for (long dateStamp : timeSlots) {
-            dates.add(new Date(dateStamp));
-        }
-        return dates;
+    public String getMeetings() {
+        return meetings;
     }
 
     public String getKey() {
@@ -106,8 +113,9 @@ public class Offer {
         map.put("longitude", longitude);
         map.put("latitude", latitude);
         map.put("description", description);
-        map.put("timeSlots", timeSlots);
+        map.put("meetings", meetings);
         map.put("pictureURIs", pictureURIs);
+        map.put("category",category);
 
         return map;
     }

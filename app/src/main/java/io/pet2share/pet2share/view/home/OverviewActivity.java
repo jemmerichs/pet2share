@@ -3,6 +3,9 @@ package io.pet2share.pet2share.view.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -27,6 +30,17 @@ public class OverviewActivity extends OverviewSetupActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
+    }
+
+    @Override
+    void showFilterDialog() {
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(R.string.filter_title)
+                .customView(R.layout.dialog_filter, true)
+                .positiveText("Ok")
+                .show();
+
+        View view = dialog.getView();
     }
 
     @Override

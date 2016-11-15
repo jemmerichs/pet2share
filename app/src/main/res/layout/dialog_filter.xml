@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/datestart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textInputLayout"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:hint="Start"
+            android:inputType="none"
+            android:textSize="12dp" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:text="Duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.appyvet.rangebar.RangeBar
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rangebar"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        custom:tickStart="0"
+        custom:tickInterval="1"
+        custom:tickEnd="28"/>
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:ms_multiline="false"
+        app:ms_hint="Category"
+        app:ms_enableFloatingLabel="false"
+        app:ms_enableErrorLabel="false"
+        app:ms_floatingLabelText="floating label"
+        app:ms_thickness="2px"
+        app:ms_arrowSize="8dp"
+        app:ms_alignLabels="false"
+        />
+</LinearLayout>

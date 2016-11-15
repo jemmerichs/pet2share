@@ -84,6 +84,71 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/datestart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textInputLayout"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:hint="Start"
+                        android:inputType="none"
+                        android:textSize="12dp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/dateend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textInputLayout"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:hint="End"
+                        android:inputType="none"
+                        android:textSize="12dp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_multiline="false"
+                    app:ms_hint="Category"
+                    app:ms_enableFloatingLabel="false"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_floatingLabelText="floating label"
+                    app:ms_thickness="2px"
+                    app:ms_arrowSize="8dp"
+                    app:ms_alignLabels="false"
+                   />
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/dates"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textInputLayout"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:lines="4"
+                        android:hint="Meeting times &amp; points"
+                        android:inputType="none"
+                        android:textSize="12dp" />
+
+                </android.support.design.widget.TextInputLayout>
+
                 <android.support.v7.widget.CardView
                     android:layout_width="128dp"
                     android:layout_height="128dp"

@@ -25,4 +25,6 @@
     <string name="title_activity_detail_offer">DetailOfferActivity</string>
     <string name="menu_refresh">Refresh offers</string>
     <string name="create_offer">Create an offer</string>
+    <string name="filter">Filter</string>
+    <string name="filter_title">Filter</string>
 </resources>

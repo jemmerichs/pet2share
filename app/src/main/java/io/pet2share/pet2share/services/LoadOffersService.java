@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.os.ResultReceiver;
 
+import com.annimon.stream.function.Predicate;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.parceler.Parcels;
@@ -41,7 +42,10 @@ public class LoadOffersService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         this.resultReceiver = intent.getParcelableExtra(resultReceiverKey);
-        OfferLoader.getInstance().loadAllOffers(offers -> {
+        Predicate<Offer> filterByName = (offer -> offer.getName().equals("Catdog"));
+        ArrayList<Predicate> filters = new ArrayList<>();
+        //filters.add(filterByName);
+        OfferLoader.getInstance().loadAllOffers(filters,offers -> {
 
             if (offers != null) {
                 Bundle bundle = new Bundle();
@@ -66,7 +70,7 @@ public class LoadOffersService extends IntentService {
 
     }
 
-    private void createExample() {
+   /* private void createExample() {
         Date soon = new Date();
         soon.setTime(new Date().getTime() + 1000000);
         Date sooner = new Date();
@@ -86,6 +90,6 @@ public class LoadOffersService extends IntentService {
         OfferLoader.getInstance().createOffer(FirebaseAuth.getInstance().getCurrentUser().getUid(), offer2, offerCreated-> OfferLoader.getInstance().uploadPictureForOffer(offer2, BitmapFactory.decodeResource(this.getResources(), R.drawable.cat)));
 
 
-    }
+    }*/
 
 }

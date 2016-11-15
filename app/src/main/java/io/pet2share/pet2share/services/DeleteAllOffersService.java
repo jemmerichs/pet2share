@@ -34,14 +34,14 @@ public class DeleteAllOffersService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         unpackData(intent);
-        OfferLoader.getInstance().loadAllOffers(offers -> {
+        OfferLoader.getInstance().loadAllOffers(new ArrayList<>(),offers -> {
 
             if (offers != null) {
                 delete(offers);
             }
         }, null);
 
-        OfferLoader.getInstance().loadAllOffers(new OfferLoadingInterface() {
+        OfferLoader.getInstance().loadAllOffers(new ArrayList<>(),new OfferLoadingInterface() {
             @Override
             public void loadOffers(ArrayList<Offer> offers) {
                 Bundle bundle = new Bundle();

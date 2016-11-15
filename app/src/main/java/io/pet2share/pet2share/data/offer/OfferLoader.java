@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.support.annotation.NonNull;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
+import com.annimon.stream.function.Predicate;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,10 +27,10 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import io.pet2share.pet2share.R;
 import io.pet2share.pet2share.common.FirebaseLoader;
 import io.pet2share.pet2share.common.Pet2ShareApplication;
@@ -46,7 +49,7 @@ public class OfferLoader extends FirebaseLoader {
 
     private ArrayList<Offer> offersForDiscovery = new ArrayList<>();
 
-    public void loadOffersByUID(String uid, final OfferLoadingInterface finishingInterface) {
+    public void loadOffersByUID(String uid, ArrayList<Comparator> comparators, final OfferLoadingInterface finishingInterface) {
         getFirebaseDatabase().getReference(String.format("offers/%s/", uid)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -56,15 +59,13 @@ public class OfferLoader extends FirebaseLoader {
                     Offer loadedOffer = offer.getValue(Offer.class);
                     loadedOffer.setUserId(uid);
                     loadedOffer.setKey(offer.getKey());
-                    ArrayList<Long> timeSlots = new ArrayList<>();
-                    for (DataSnapshot timeSlot : offer.child("timeslots").getChildren()) {
-                        timeSlots.add(Long.parseLong(String.valueOf(timeSlot.getValue())));
-                    }
-                    loadedOffer.setTimeSlots(timeSlots);
                     /*if(loadedOffer.getPictureURIs()==null) {
                         loadedOffer.setPictureURIs(new ArrayList<>());
                     }*/
                     offerList.add(loadedOffer);
+                }
+                for(Comparator comparator : comparators) {
+
                 }
                 finishingInterface.loadOffers(offerList);
             }
@@ -84,11 +85,6 @@ public class OfferLoader extends FirebaseLoader {
                 Offer offer = dataSnapshot.getValue(Offer.class);
                 offer.setKey(dataSnapshot.getKey());
                 offer.setUserId(uid);
-                ArrayList<Long> timeSlots = new ArrayList<>();
-                for (DataSnapshot timeSlot : dataSnapshot.child("timeslots").getChildren()) {
-                    timeSlots.add(Long.parseLong(String.valueOf(timeSlot.getValue())));
-                }
-                offer.setTimeSlots(timeSlots);
                 ArrayList<Offer> offers = new ArrayList<Offer>();
                 offers.add(offer);
                 finishingInterface.loadOffers(offers);
@@ -101,7 +97,7 @@ public class OfferLoader extends FirebaseLoader {
         });
     }
 
-    public void loadAllOffers(final OfferLoadingInterface finishingInterface, final Location locationForCalculation) {
+    public void loadAllOffers(ArrayList<Predicate> comparators, final OfferLoadingInterface finishingInterface, final Location locationForCalculation) {
         getFirebaseDatabase().getReference(String.format("offers")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -111,11 +107,6 @@ public class OfferLoader extends FirebaseLoader {
                         Offer loadedOffer = offer.getValue(Offer.class);
                         loadedOffer.setUserId(offerListOfUser.getKey());
                         loadedOffer.setKey(offer.getKey());
-                        ArrayList<Long> timeSlots = new ArrayList<>();
-                        for (DataSnapshot timeSlot : offer.child("timeslots").getChildren()) {
-                            timeSlots.add(Long.parseLong(String.valueOf(timeSlot.getValue())));
-                        }
-                        loadedOffer.setTimeSlots(timeSlots);
                        /* if(loadedOffer.getPictureURIs()==null) {
                             loadedOffer.setPictureURIs(new ArrayList<>());
                         }*/
@@ -124,6 +115,9 @@ public class OfferLoader extends FirebaseLoader {
                 }
                 if (locationForCalculation != null) {
                     Collections.sort(offerList, (o1, o2) -> (int) (o1.calculateDistanceToOfferinMeters(locationForCalculation.getLatitude(), locationForCalculation.getLongitude()) - o2.calculateDistanceToOfferinMeters(locationForCalculation.getLatitude(), locationForCalculation.getLongitude())));
+                }
+                for(Predicate predicate : comparators) {
+                    offerList = (ArrayList<Offer>)Stream.of(offerList).filter(predicate).collect(Collectors.toCollection(ArrayList<Offer>::new));
                 }
                 finishingInterface.loadOffers(offerList);
 
